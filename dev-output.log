@@ -1,0 +1,8 @@
+▲ Next.js 16.3.3 (webpack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.60:3001
+- Environments: .env
+✓ Ready in 2.1s
+✓ Running next.config.ts took 635ms
+  Skipping creating a lockfile at C:\Users\Maycon\Desktop\Projeto Pessoal\tech-intelligence-os\.next\dev\lock because we're using WASM bindings
+[?25h

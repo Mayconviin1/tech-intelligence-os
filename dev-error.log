@@ -1,0 +1,9 @@
+⚠ Attempted to load @next/swc-win32-x64-msvc, but an error occurred: \\?\C:\Users\Maycon\Desktop\Projeto Pessoal\tech-intelligence-os\node_modules\next\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node is not a valid Win32 application.
+\\?\C:\Users\Maycon\Desktop\Projeto Pessoal\tech-intelligence-os\node_modules\next\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node
+Error: EBUSY: resource busy or locked, unlink 'C:\Users\Maycon\Desktop\Projeto Pessoal\tech-intelligence-os\.next\dev\server\app\api\saved\dev.db'
+    at ignore-listed frames {
+  errno: -4082,
+  code: 'EBUSY',
+  syscall: 'unlink',
+  path: 'C:\\Users\\Maycon\\Desktop\\Projeto Pessoal\\tech-intelligence-os\\.next\\dev\\server\\app\\api\\saved\\dev.db'
+}
