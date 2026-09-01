@@ -15,13 +15,13 @@ interface JobApplication {
   nextAction: string | null;
   appliedAt: string | null;
   createdAt: string;
-  job: {
+  job?: {
     id: string;
     title: string;
     company: string;
     location: string | null;
     url: string;
-  };
+  } | null;
 }
 
 const STATUS_ORDER = ["INTERVIEW", "OFFER", "APPLIED", "TECHNICAL_TEST", "SAVED", "REJECTED", "WITHDRAWN"] as const;
@@ -202,20 +202,20 @@ export default function ApplicationsPage() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-1">
                               <a
-                                href={app.job.url}
+                                href={app.job?.url || "#"}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-sm font-medium text-text-primary hover:underline truncate"
                               >
-                                {app.job.title}
+                                {app.job?.title || `Job #${app.jobId}`}
                               </a>
                               <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full border ${STATUS_COLORS[app.status]}`}>
                                 {STATUS_LABELS[app.status]}
                               </span>
                             </div>
                             <p className="text-xs text-text-secondary">
-                              {app.job.company}
-                              {app.job.location && ` · ${app.job.location}`}
+                              {app.job?.company || "Unknown company"}
+                              {app.job?.location && ` · ${app.job.location}`}
                             </p>
                             <div className="flex items-center gap-3 mt-2 text-[10px] text-text-muted">
                               {app.appliedAt && (

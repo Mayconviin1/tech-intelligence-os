@@ -28,7 +28,7 @@ export default function JobsPage() {
         const res = await fetch("/api/jobs?mode=matches");
         if (!res.ok) throw new Error(`Failed to load jobs (${res.status})`);
         const data = await res.json();
-        setJobs(Array.isArray(data) ? data : data.jobs ?? []);
+        setJobs(Array.isArray(data) ? data : data.data ?? []);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load jobs");
       } finally {
@@ -52,25 +52,32 @@ export default function JobsPage() {
     fetchSaved();
   }, []);
 
-  const toggleSave = useCallback(async (jobId: string) => {
-    if (savedJobIds.has(jobId)) return;
+  const toggleSave = useCallback(async (job: Job) => {
+    if (savedJobIds.has(job.id)) return;
 
-    setSavingIds((prev) => new Set(prev).add(jobId));
+    setSavingIds((prev) => new Set(prev).add(job.id));
     try {
       const res = await fetch("/api/applications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jobId, status: "SAVED" }),
+        body: JSON.stringify({
+          jobId: job.id,
+          status: "SAVED",
+          title: job.title,
+          company: job.company,
+          location: job.location,
+          url: job.url,
+        }),
       });
       if (res.ok) {
-        setSavedJobIds((prev) => new Set(prev).add(jobId));
+        setSavedJobIds((prev) => new Set(prev).add(job.id));
       }
     } catch (err) {
       console.error(err);
     } finally {
       setSavingIds((prev) => {
         const next = new Set(prev);
-        next.delete(jobId);
+        next.delete(job.id);
         return next;
       });
     }
@@ -173,7 +180,7 @@ export default function JobsPage() {
                     </a>
                   )}
                   <button
-                    onClick={() => toggleSave(job.id)}
+                    onClick={() => toggleSave(job)}
                     disabled={savingIds.has(job.id)}
                     className="shrink-0 w-8 h-8 flex items-center justify-center transition-colors disabled:opacity-50"
                     title={savedJobIds.has(job.id) ? "Already saved" : "Save job"}

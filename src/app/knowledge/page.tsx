@@ -49,7 +49,15 @@ export default function KnowledgePage() {
       .then((res) => res.json())
       .then((json) => {
         const data = Array.isArray(json) ? json : json.data ?? [];
-        setItems(data);
+        setItems(data.map((item: any) => ({
+          id: item.id,
+          title: item.title ?? item.url ?? "Untitled",
+          url: item.url ?? "#",
+          category: item.category,
+          tags: typeof item.tags === "string" ? JSON.parse(item.tags || "[]") : item.tags,
+          importance: item.importance,
+          savedAt: item.createdAt,
+        })));
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -69,9 +77,18 @@ export default function KnowledgePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: newUrl, title: newTitle || newUrl }),
       });
-      const data = await res.json();
-      if (data) {
-        setItems((prev) => [data, ...prev]);
+      const result = await res.json();
+      const data = result.data ?? result;
+      if (data && data.id) {
+        setItems((prev) => [{
+          id: data.id,
+          title: data.title ?? data.url ?? "Untitled",
+          url: data.url ?? "#",
+          category: data.category,
+          tags: typeof data.tags === "string" ? JSON.parse(data.tags || "[]") : data.tags,
+          importance: data.importance,
+          savedAt: data.createdAt,
+        }, ...prev]);
       }
       setNewUrl("");
       setNewTitle("");

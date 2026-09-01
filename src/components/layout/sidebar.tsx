@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -151,7 +152,7 @@ export function Sidebar() {
                 const isActive = pathname === item.href;
                 const Icon = iconMap[item.icon];
                 return (
-                  <a
+                  <Link
                     key={item.href}
                     href={item.href}
                     className={cn(
@@ -176,7 +177,7 @@ export function Sidebar() {
                         </motion.span>
                       )}
                     </AnimatePresence>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -186,7 +187,7 @@ export function Sidebar() {
 
       {/* Settings + Collapse */}
       <div className="p-2 border-t border-border-subtle flex-shrink-0 space-y-0.5">
-        <a
+        <Link
           href="/settings"
           className={cn(
             "flex items-center gap-3 h-9 rounded-[10px] transition-all duration-200",
@@ -210,7 +211,7 @@ export function Sidebar() {
               </motion.span>
             )}
           </AnimatePresence>
-        </a>
+        </Link>
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="flex items-center justify-center w-full h-9 rounded-[10px] text-text-muted hover:text-text-secondary hover:bg-bg-surface transition-all duration-200"

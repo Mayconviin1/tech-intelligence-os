@@ -266,7 +266,7 @@ model JobListing {
 
 model JobApplication {
   id          String   @id @default(cuid())
-  jobId       String
+  jobId       String?
   userId      String
   status      String   @default("SAVED") // SAVED, APPLIED, INTERVIEW, TECHNICAL_TEST, OFFER, REJECTED, WITHDRAWN
   notes       String?
@@ -277,7 +277,7 @@ model JobApplication {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  job  JobListing @relation(fields: [jobId], references: [id])
+  job  JobListing? @relation(fields: [jobId], references: [id])
   user User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

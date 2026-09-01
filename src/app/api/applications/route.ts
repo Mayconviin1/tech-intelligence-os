@@ -6,10 +6,7 @@ const VALID_STATUSES = ["SAVED", "APPLIED", "INTERVIEW", "TECHNICAL_TEST", "OFFE
 
 export async function GET() {
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const userId = getCurrentUserId();
 
     const applications = await db.jobApplication.findMany({
       where: { userId },
@@ -26,13 +23,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const userId = getCurrentUserId();
     const body = await request.json();
-    const { jobId, status, notes, salary, contact, nextAction } = body;
+    const { jobId, status, notes, salary, contact, nextAction, title, company, location, url } = body;
 
     if (!jobId) {
       return NextResponse.json({ error: "jobId is required" }, { status: 400 });
@@ -49,6 +42,20 @@ export async function POST(request: NextRequest) {
     if (existing) {
       return NextResponse.json({ error: "Application already exists for this job" }, { status: 409 });
     }
+
+    // Ensure JobListing exists
+    await db.jobListing.upsert({
+      where: { id: jobId },
+      update: {},
+      create: {
+        id: jobId,
+        title: title || "Unknown Position",
+        company: company || "Unknown Company",
+        location: location || null,
+        url: url || "#",
+        publishedAt: new Date(),
+      },
+    });
 
     const application = await db.jobApplication.create({
       data: {
@@ -73,11 +80,7 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const userId = getCurrentUserId();
     const body = await request.json();
     const { id, status, notes, salary, contact, nextAction } = body;
 
@@ -124,11 +127,7 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const userId = await getCurrentUserId();
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const userId = getCurrentUserId();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
 
