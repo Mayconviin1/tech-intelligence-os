@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface Recommendation {
   type: string;
@@ -27,9 +28,15 @@ export function AiRecommendations({ recommendations }: AiRecommendationsProps) {
         <h2 className="text-xs font-medium uppercase tracking-widest text-text-muted mb-6">
           AI Recommends
         </h2>
-        <p className="text-sm text-text-secondary">
+        <p className="text-sm text-text-secondary mb-4">
           Set up your profile and interests to get AI-powered recommendations.
         </p>
+        <Link
+          href="/settings"
+          className="inline-flex items-center justify-center h-8 px-4 text-xs font-medium bg-text-primary text-bg-primary rounded-pill hover:bg-text-secondary transition-colors duration-200"
+        >
+          Set up profile
+        </Link>
       </div>
     );
   }

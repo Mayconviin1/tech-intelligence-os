@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import type { ForYouItem } from "@/types";
 
 interface ForYouProps {
@@ -12,9 +13,15 @@ export function ForYou({ items }: ForYouProps) {
         <h2 className="text-xs font-medium uppercase tracking-widest text-text-muted mb-6">
           For You
         </h2>
-        <p className="text-sm text-text-secondary">
+        <p className="text-sm text-text-secondary mb-4">
           Personalize your profile to get tailored recommendations.
         </p>
+        <Link
+          href="/settings"
+          className="inline-flex items-center justify-center h-8 px-4 text-xs font-medium bg-text-primary text-bg-primary rounded-pill hover:bg-text-secondary transition-colors duration-200"
+        >
+          Set up profile
+        </Link>
       </div>
     );
   }

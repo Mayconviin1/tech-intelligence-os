@@ -124,9 +124,12 @@ export default function JobsPage() {
             <p className="text-sm text-text-secondary text-center max-w-sm mb-6">
               Create your career profile to get personalized job matches and recommendations.
             </p>
-            <button className="h-10 px-5 text-sm font-medium bg-text-primary text-bg-primary rounded-pill hover:bg-text-secondary transition-colors duration-200">
+            <Link
+              href="/career"
+              className="inline-flex items-center justify-center h-10 px-5 text-sm font-medium bg-text-primary text-bg-primary rounded-pill hover:bg-text-secondary transition-colors duration-200"
+            >
               Set up profile
-            </button>
+            </Link>
           </div>
         )}
 

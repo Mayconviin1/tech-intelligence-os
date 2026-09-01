@@ -1,6 +1,7 @@
 "use client";
 
 import { Layout } from "@/components/layout/layout";
+import Link from "next/link";
 
 export default function CareerPage() {
   return (
@@ -53,9 +54,12 @@ export default function CareerPage() {
         </div>
 
         <div className="mt-12">
-          <button className="h-10 px-5 text-sm font-medium bg-text-primary text-bg-primary rounded-pill hover:bg-text-secondary transition-colors duration-200">
+          <Link
+            href="/settings"
+            className="inline-flex items-center justify-center h-10 px-5 text-sm font-medium bg-text-primary text-bg-primary rounded-pill hover:bg-text-secondary transition-colors duration-200"
+          >
             Complete profile
-          </button>
+          </Link>
         </div>
       </div>
     </Layout>
